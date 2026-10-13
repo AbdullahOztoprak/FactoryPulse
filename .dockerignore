@@ -1,0 +1,11 @@
+.git
+.github
+**/bin
+**/obj
+**/node_modules
+**/dist
+**/.angular
+*.db
+*.db-shm
+*.db-wal
+*.zip

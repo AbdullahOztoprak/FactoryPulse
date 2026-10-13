@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="FactoryPulse.Api/FactoryPulse.Api.csproj" />
+  <Project Path="FactoryPulse.Tests/FactoryPulse.Tests.csproj" />
+</Solution>

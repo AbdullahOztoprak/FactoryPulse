@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 360" role="img" aria-label="FactoryPulse system architecture">
+  <rect width="820" height="360" rx="16" fill="#0e1b2f" />
+  <text x="34" y="42" fill="#c8e0ea" font-size="20" font-weight="700" font-family="Arial">FactoryPulse · Demo Architecture</text>
+  <g font-family="Arial" text-anchor="middle">
+    <rect x="34" y="89" width="185" height="125" rx="12" fill="#173751" stroke="#16b6b5" stroke-width="2" />
+    <text x="126" y="127" font-size="17" font-weight="700" fill="#fff">Angular 21</text>
+    <text x="126" y="152" font-size="12" fill="#bad6e5">Dashboard UI</text><text x="126" y="172" font-size="12" fill="#bad6e5">TypeScript · HttpClient</text>
+    <rect x="317" y="89" width="185" height="125" rx="12" fill="#263457" stroke="#a794ff" stroke-width="2" />
+    <text x="410" y="127" font-size="17" font-weight="700" fill="#fff">ASP.NET Core 10</text>
+    <text x="410" y="152" font-size="12" fill="#c3cae9">REST endpoints</text><text x="410" y="172" font-size="12" fill="#c3cae9">C# · Business logic</text>
+    <rect x="600" y="89" width="185" height="125" rx="12" fill="#16433e" stroke="#54d2af" stroke-width="2" />
+    <text x="692" y="127" font-size="17" font-weight="700" fill="#fff">SQLite</text>
+    <text x="692" y="152" font-size="12" fill="#bde6d8">Entity Framework</text><text x="692" y="172" font-size="12" fill="#bde6d8">Machines · Incidents</text>
+    <path d="M219 150 H310 M301 143 L310 150 L301 157" stroke="#81aebd" fill="none" stroke-width="2"/>
+    <path d="M502 150 H593 M584 143 L593 150 L584 157" stroke="#81aebd" fill="none" stroke-width="2"/>
+    <text x="269" y="134" font-size="10" fill="#9fc2cd">JSON</text><text x="551" y="134" font-size="10" fill="#9fc2cd">EF Core</text>
+    <rect x="317" y="248" width="185" height="68" rx="12" fill="#263457" stroke="#e6a65e" stroke-width="2" />
+    <text x="410" y="274" font-size="14" font-weight="700" fill="#fff">Simulator</text><text x="410" y="294" font-size="11" fill="#dfe0e8">Synthetic readings / 15 sec</text>
+    <path d="M410 248 V221 M403 231 L410 221 L417 231" stroke="#e6a65e" fill="none" stroke-width="2" />
+    <text x="126" y="265" fill="#9fc2cd" font-size="12">Container: nginx</text><text x="692" y="265" fill="#9fc2cd" font-size="12">Persisted SQLite volume</text>
+    <text x="410" y="344" fill="#7295aa" font-size="11">SIMULATED DATA ONLY · NOT CONNECTED TO REAL EQUIPMENT</text>
+  </g>
+</svg>
