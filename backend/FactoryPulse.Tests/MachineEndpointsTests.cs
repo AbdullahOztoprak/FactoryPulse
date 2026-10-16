@@ -16,6 +16,22 @@ public sealed class MachineEndpointsTests(FactoryPulseApiFactory factory)
     private readonly HttpClient client = factory.CreateClient();
 
     [Fact]
+    public async Task Machine_list_returns_latest_reading_summary()
+    {
+        var machines = await client.GetFromJsonAsync<List<MachineSummary>>("/api/machines");
+
+        Assert.Equal(8, machines!.Count);
+        Assert.All(machines, machine =>
+        {
+            Assert.NotEqual(Guid.Empty, machine.Id);
+            Assert.False(string.IsNullOrWhiteSpace(machine.Code));
+            Assert.NotNull(machine.LatestTemperatureC);
+            Assert.NotNull(machine.LatestVibrationMmS);
+            Assert.NotNull(machine.LastReadingAtUtc);
+        });
+    }
+
+    [Fact]
     public async Task Existing_machine_returns_ok()
     {
         var machines = await client.GetFromJsonAsync<List<MachineSummary>>("/api/machines");
@@ -37,7 +53,12 @@ public sealed class MachineEndpointsTests(FactoryPulseApiFactory factory)
         Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
     }
 
-    private sealed record MachineSummary(Guid Id, string Code);
+    private sealed record MachineSummary(
+        Guid Id,
+        string Code,
+        double? LatestTemperatureC,
+        double? LatestVibrationMmS,
+        DateTime? LastReadingAtUtc);
 }
 
 public sealed class FactoryPulseApiFactory : WebApplicationFactory<Program>

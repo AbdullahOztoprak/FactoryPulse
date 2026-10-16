@@ -36,24 +36,27 @@ public static class FactoryEndpoints
 
         group.MapGet("/machines", async (FactoryDbContext db, CancellationToken ct) =>
         {
-            var machines = await db.Machines.AsNoTracking().OrderBy(x => x.Code).ToListAsync(ct);
-            var results = new List<object>();
-            foreach (var machine in machines)
-            {
-                var reading = await db.Readings.AsNoTracking()
-                    .Where(r => r.MachineId == machine.Id)
-                    .OrderByDescending(r => r.RecordedAtUtc)
-                    .Select(r => new { r.TemperatureC, r.VibrationMmS, r.RecordedAtUtc })
-                    .FirstOrDefaultAsync(ct);
-                results.Add(new
+            var results = await db.Machines.AsNoTracking()
+                .OrderBy(machine => machine.Code)
+                .Select(machine => new
                 {
                     machine.Id, machine.Code, machine.Name, machine.Line,
                     machine.Status, machine.UpdatedAtUtc,
-                    latestTemperatureC = reading?.TemperatureC,
-                    latestVibrationMmS = reading?.VibrationMmS,
-                    lastReadingAtUtc = reading?.RecordedAtUtc
-                });
-            }
+                    latestTemperatureC = machine.Readings
+                        .OrderByDescending(reading => reading.RecordedAtUtc)
+                        .Select(reading => (double?)reading.TemperatureC)
+                        .FirstOrDefault(),
+                    latestVibrationMmS = machine.Readings
+                        .OrderByDescending(reading => reading.RecordedAtUtc)
+                        .Select(reading => (double?)reading.VibrationMmS)
+                        .FirstOrDefault(),
+                    lastReadingAtUtc = machine.Readings
+                        .OrderByDescending(reading => reading.RecordedAtUtc)
+                        .Select(reading => (DateTime?)reading.RecordedAtUtc)
+                        .FirstOrDefault()
+                })
+                .ToListAsync(ct);
+
             return Results.Ok(results);
         });
 
