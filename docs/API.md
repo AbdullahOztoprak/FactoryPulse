@@ -20,6 +20,14 @@ GET /api/machines
 
 Returns `id`, `code`, `name`, `line`, `status`, latest temperature and vibration metrics for each machine. Take an `id` from this endpoint for the next calls.
 
+## Get machine detail
+
+```http
+GET /api/machines/{id}
+```
+
+Returns one machine with its latest reading and open incident count. A missing machine returns **404 Not Found**.
+
 ## Get readings
 
 ```http

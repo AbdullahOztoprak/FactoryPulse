@@ -95,6 +95,7 @@ The CI workflow runs equivalent checks on push and pull request. `package-lock.j
 | GET | `/health` | Basic process health |
 | GET | `/api/overview` | Summary metrics |
 | GET | `/api/machines` | Machine list with latest telemetry |
+| GET | `/api/machines/{id}` | Single machine detail |
 | GET | `/api/machines/{id}/readings?limit=30` | Recent sensor readings |
 | GET | `/api/incidents` | Most recent 50 incidents |
 | POST | `/api/incidents` | Create incident |

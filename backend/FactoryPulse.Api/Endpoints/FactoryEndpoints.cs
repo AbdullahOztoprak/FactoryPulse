@@ -57,6 +57,35 @@ public static class FactoryEndpoints
             return Results.Ok(results);
         });
 
+        group.MapGet("/machines/{id:guid}", async (Guid id, FactoryDbContext db, CancellationToken ct) =>
+        {
+            var machine = await db.Machines.AsNoTracking()
+                .Where(x => x.Id == id)
+                .Select(x => new
+                {
+                    x.Id,
+                    x.Code,
+                    x.Name,
+                    x.Line,
+                    x.Status,
+                    x.UpdatedAtUtc,
+                    latestReading = x.Readings
+                        .OrderByDescending(r => r.RecordedAtUtc)
+                        .Select(r => new
+                        {
+                            r.RecordedAtUtc,
+                            r.TemperatureC,
+                            r.VibrationMmS,
+                            r.UnitsProduced
+                        })
+                        .FirstOrDefault(),
+                    openIncidentCount = x.Incidents.Count(i => i.Status != IncidentStatus.Resolved)
+                })
+                .SingleOrDefaultAsync(ct);
+
+            return machine is null ? Results.NotFound() : Results.Ok(machine);
+        });
+
         group.MapGet("/machines/{id:guid}/readings", async (Guid id, int? limit, FactoryDbContext db, CancellationToken ct) =>
         {
             if (!await db.Machines.AnyAsync(x => x.Id == id, ct)) return Results.NotFound();
